@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Library3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AUTHOR">
+    <Key>
+      <PropertyRef Name="idAuthor" />
+    </Key>
+    <Property Name="idAuthor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BOOK" Relationship="Self.BOOK_has_AUTHOR" FromRole="AUTHOR" ToRole="BOOK" />
+  </EntityType>
+  <EntityType Name="BANK">
+    <Key>
+      <PropertyRef Name="idBank" />
+    </Key>
+    <Property Name="idBank" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="placeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="numOfPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BOOKONES" Relationship="Self.FK__BOOKONES__idBank__619B8048" FromRole="BANK" ToRole="BOOKONES" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="idBook" />
+    </Key>
+    <Property Name="idBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="numPages" Type="Int32" Nullable="false" />
+    <Property Name="numExem" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BOOKONES" Relationship="Self.FK__BOOKONES__idBook__628FA481" FromRole="BOOK" ToRole="BOOKONES" />
+    <NavigationProperty Name="AUTHOR" Relationship="Self.BOOK_has_AUTHOR" FromRole="BOOK" ToRole="AUTHOR" />
+  </EntityType>
+  <EntityType Name="BOOKONES">
+    <Key>
+      <PropertyRef Name="idBookone" />
+    </Key>
+    <Property Name="idBookone" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="injury" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idBook" Type="Int32" />
+    <Property Name="idBank" Type="Int32" />
+    <NavigationProperty Name="BANK" Relationship="Self.FK__BOOKONES__idBank__619B8048" FromRole="BOOKONES" ToRole="BANK" />
+    <NavigationProperty Name="BOOK" Relationship="Self.FK__BOOKONES__idBook__628FA481" FromRole="BOOKONES" ToRole="BOOK" />
+  </EntityType>
+  <EntityType Name="GETBOOK">
+    <Key>
+      <PropertyRef Name="idGetbook" />
+    </Key>
+    <Property Name="idGetbook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="giveDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="cardNum" Type="Int32" Nullable="false" />
+    <Property Name="realReturnDate" Type="DateTime" Precision="0" />
+    <Property Name="idBookone" Type="Int32" />
+    <Property Name="idStudent" Type="Int32" />
+    <Property Name="returnDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="STUDENT" Relationship="Self.FK__GETBOOK__idStude__4E88ABD4" FromRole="GETBOOK" ToRole="STUDENT" />
+  </EntityType>
+  <EntityType Name="STUDENT">
+    <Key>
+      <PropertyRef Name="idStudent" />
+    </Key>
+    <Property Name="idStudent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course" Type="Int32" Nullable="false" />
+    <Property Name="groupp" Type="Int32" Nullable="false" />
+    <Property Name="cardNum" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GETBOOK" Relationship="Self.FK__GETBOOK__idStude__4E88ABD4" FromRole="STUDENT" ToRole="GETBOOK" />
+  </EntityType>
+  <Association Name="FK__BOOKONES__idBank__619B8048">
+    <End Role="BANK" Type="Self.BANK" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOKONES" Type="Self.BOOKONES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANK">
+        <PropertyRef Name="idBank" />
+      </Principal>
+      <Dependent Role="BOOKONES">
+        <PropertyRef Name="idBank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKONES__idBook__628FA481">
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOKONES" Type="Self.BOOKONES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="idBook" />
+      </Principal>
+      <Dependent Role="BOOKONES">
+        <PropertyRef Name="idBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GETBOOK__idStude__4E88ABD4">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GETBOOK" Type="Self.GETBOOK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="idStudent" />
+      </Principal>
+      <Dependent Role="GETBOOK">
+        <PropertyRef Name="idStudent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BOOK_has_AUTHOR">
+    <End Role="AUTHOR" Type="Self.AUTHOR" Multiplicity="*" />
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Library3Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" />
+    <EntitySet Name="BANK" EntityType="Self.BANK" />
+    <EntitySet Name="BOOK" EntityType="Self.BOOK" />
+    <EntitySet Name="BOOKONES" EntityType="Self.BOOKONES" />
+    <EntitySet Name="GETBOOK" EntityType="Self.GETBOOK" />
+    <EntitySet Name="STUDENT" EntityType="Self.STUDENT" />
+    <AssociationSet Name="FK__BOOKONES__idBank__619B8048" Association="Self.FK__BOOKONES__idBank__619B8048">
+      <End Role="BANK" EntitySet="BANK" />
+      <End Role="BOOKONES" EntitySet="BOOKONES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKONES__idBook__628FA481" Association="Self.FK__BOOKONES__idBook__628FA481">
+      <End Role="BOOK" EntitySet="BOOK" />
+      <End Role="BOOKONES" EntitySet="BOOKONES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GETBOOK__idStude__4E88ABD4" Association="Self.FK__GETBOOK__idStude__4E88ABD4">
+      <End Role="STUDENT" EntitySet="STUDENT" />
+      <End Role="GETBOOK" EntitySet="GETBOOK" />
+    </AssociationSet>
+    <AssociationSet Name="BOOK_has_AUTHOR" Association="Self.BOOK_has_AUTHOR">
+      <End Role="AUTHOR" EntitySet="AUTHOR" />
+      <End Role="BOOK" EntitySet="BOOK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

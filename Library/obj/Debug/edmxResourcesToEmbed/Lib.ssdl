@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Library3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AUTHOR">
+    <Key>
+      <PropertyRef Name="idAuthor" />
+    </Key>
+    <Property Name="idAuthor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fio" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BANK">
+    <Key>
+      <PropertyRef Name="idBank" />
+    </Key>
+    <Property Name="idBank" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="placeName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="numOfPlace" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="idBook" />
+    </Key>
+    <Property Name="idBook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="numPages" Type="int" Nullable="false" />
+    <Property Name="numExem" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Library3.dbo.BOOK_has_AUTHOR" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="BOOK_has_AUTHOR">
+    <Key>
+      <PropertyRef Name="idBook" />
+      <PropertyRef Name="idAuthor" />
+    </Key>
+    <Property Name="idBook" Type="int" Nullable="false" />
+    <Property Name="idAuthor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BOOKONES">
+    <Key>
+      <PropertyRef Name="idBookone" />
+    </Key>
+    <Property Name="idBookone" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="injury" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="idBook" Type="int" />
+    <Property Name="idBank" Type="int" />
+  </EntityType>
+  <EntityType Name="GETBOOK">
+    <Key>
+      <PropertyRef Name="idGetbook" />
+    </Key>
+    <Property Name="idGetbook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="giveDate" Type="date" Nullable="false" />
+    <Property Name="cardNum" Type="int" Nullable="false" />
+    <Property Name="realReturnDate" Type="date" />
+    <Property Name="idBookone" Type="int" />
+    <Property Name="idStudent" Type="int" />
+    <Property Name="returnDate" Type="date" />
+  </EntityType>
+  <EntityType Name="STUDENT">
+    <Key>
+      <PropertyRef Name="idStudent" />
+    </Key>
+    <Property Name="idStudent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="faculty" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course" Type="int" Nullable="false" />
+    <Property Name="groupp" Type="int" Nullable="false" />
+    <Property Name="cardNum" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__BOOK_has___idAut__22AA2996">
+    <End Role="AUTHOR" Type="Self.AUTHOR" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOK_has_AUTHOR" Type="Self.BOOK_has_AUTHOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AUTHOR">
+        <PropertyRef Name="idAuthor" />
+      </Principal>
+      <Dependent Role="BOOK_has_AUTHOR">
+        <PropertyRef Name="idAuthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOK_has___idBoo__239E4DCF">
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOK_has_AUTHOR" Type="Self.BOOK_has_AUTHOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="idBook" />
+      </Principal>
+      <Dependent Role="BOOK_has_AUTHOR">
+        <PropertyRef Name="idBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKONES__idBank__619B8048">
+    <End Role="BANK" Type="Self.BANK" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOKONES" Type="Self.BOOKONES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANK">
+        <PropertyRef Name="idBank" />
+      </Principal>
+      <Dependent Role="BOOKONES">
+        <PropertyRef Name="idBank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKONES__idBook__628FA481">
+    <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BOOKONES" Type="Self.BOOKONES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="idBook" />
+      </Principal>
+      <Dependent Role="BOOKONES">
+        <PropertyRef Name="idBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GETBOOK__idStude__4E88ABD4">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GETBOOK" Type="Self.GETBOOK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="idStudent" />
+      </Principal>
+      <Dependent Role="GETBOOK">
+        <PropertyRef Name="idStudent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище Library3ModelContainer">
+    <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BANK" EntityType="Self.BANK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOKONES" EntityType="Self.BOOKONES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GETBOOK" EntityType="Self.GETBOOK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOK_has_AUTHOR" EntityType="Self.BOOK_has_AUTHOR" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [BOOK_has_AUTHOR].[idBook] AS [idBook], 
+    [BOOK_has_AUTHOR].[idAuthor] AS [idAuthor]
+    FROM [dbo].[BOOK_has_AUTHOR] AS [BOOK_has_AUTHOR]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__BOOK_has___idAut__22AA2996" Association="Self.FK__BOOK_has___idAut__22AA2996">
+      <End Role="AUTHOR" EntitySet="AUTHOR" />
+      <End Role="BOOK_has_AUTHOR" EntitySet="BOOK_has_AUTHOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOK_has___idBoo__239E4DCF" Association="Self.FK__BOOK_has___idBoo__239E4DCF">
+      <End Role="BOOK" EntitySet="BOOK" />
+      <End Role="BOOK_has_AUTHOR" EntitySet="BOOK_has_AUTHOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKONES__idBank__619B8048" Association="Self.FK__BOOKONES__idBank__619B8048">
+      <End Role="BANK" EntitySet="BANK" />
+      <End Role="BOOKONES" EntitySet="BOOKONES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKONES__idBook__628FA481" Association="Self.FK__BOOKONES__idBook__628FA481">
+      <End Role="BOOK" EntitySet="BOOK" />
+      <End Role="BOOKONES" EntitySet="BOOKONES" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GETBOOK__idStude__4E88ABD4" Association="Self.FK__GETBOOK__idStude__4E88ABD4">
+      <End Role="STUDENT" EntitySet="STUDENT" />
+      <End Role="GETBOOK" EntitySet="GETBOOK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

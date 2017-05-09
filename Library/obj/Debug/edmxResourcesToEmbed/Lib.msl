@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище Library3ModelContainer" CdmEntityContainer="Library3Entities">
+    <EntitySetMapping Name="AUTHOR">
+      <EntityTypeMapping TypeName="Library3Model.AUTHOR">
+        <MappingFragment StoreEntitySet="AUTHOR">
+          <ScalarProperty Name="idAuthor" ColumnName="idAuthor" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANK">
+      <EntityTypeMapping TypeName="Library3Model.BANK">
+        <MappingFragment StoreEntitySet="BANK">
+          <ScalarProperty Name="idBank" ColumnName="idBank" />
+          <ScalarProperty Name="placeName" ColumnName="placeName" />
+          <ScalarProperty Name="numOfPlace" ColumnName="numOfPlace" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOK">
+      <EntityTypeMapping TypeName="Library3Model.BOOK">
+        <MappingFragment StoreEntitySet="BOOK">
+          <ScalarProperty Name="idBook" ColumnName="idBook" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="numPages" ColumnName="numPages" />
+          <ScalarProperty Name="numExem" ColumnName="numExem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOKONES">
+      <EntityTypeMapping TypeName="Library3Model.BOOKONES">
+        <MappingFragment StoreEntitySet="BOOKONES">
+          <ScalarProperty Name="idBookone" ColumnName="idBookone" />
+          <ScalarProperty Name="injury" ColumnName="injury" />
+          <ScalarProperty Name="idBook" ColumnName="idBook" />
+          <ScalarProperty Name="idBank" ColumnName="idBank" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GETBOOK">
+      <EntityTypeMapping TypeName="Library3Model.GETBOOK">
+        <MappingFragment StoreEntitySet="GETBOOK">
+          <ScalarProperty Name="idGetbook" ColumnName="idGetbook" />
+          <ScalarProperty Name="giveDate" ColumnName="giveDate" />
+          <ScalarProperty Name="cardNum" ColumnName="cardNum" />
+          <ScalarProperty Name="realReturnDate" ColumnName="realReturnDate" />
+          <ScalarProperty Name="idBookone" ColumnName="idBookone" />
+          <ScalarProperty Name="idStudent" ColumnName="idStudent" />
+          <ScalarProperty Name="returnDate" ColumnName="returnDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STUDENT">
+      <EntityTypeMapping TypeName="Library3Model.STUDENT">
+        <MappingFragment StoreEntitySet="STUDENT">
+          <ScalarProperty Name="idStudent" ColumnName="idStudent" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="faculty" ColumnName="faculty" />
+          <ScalarProperty Name="course" ColumnName="course" />
+          <ScalarProperty Name="groupp" ColumnName="groupp" />
+          <ScalarProperty Name="cardNum" ColumnName="cardNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BOOK_has_AUTHOR" TypeName="Library3Model.BOOK_has_AUTHOR" StoreEntitySet="BOOK_has_AUTHOR">
+      <EndProperty Name="AUTHOR">
+        <ScalarProperty Name="idAuthor" ColumnName="idAuthor" />
+      </EndProperty>
+      <EndProperty Name="BOOK">
+        <ScalarProperty Name="idBook" ColumnName="idBook" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
